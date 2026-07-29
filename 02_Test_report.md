@@ -1,5 +1,5 @@
 ## Přehled vykonaných testovacích scénářů 
-Testovací scénáře jsou součástí testovací analýzy.
+Výsledek provedeného testování, samotné testovací scénáře jsou součástí testovací analýzy.
 
 | ID Scénáře | Název testovacího scénáře | Výsledek | Počet chyb | Výstup |
 | :--- | :--- | :---: | :---: | :--- |
