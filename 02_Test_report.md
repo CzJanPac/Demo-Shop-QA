@@ -1,5 +1,23 @@
-## Přehled vykonaných testovacích scénářů 
-Výsledek provedeného testování, samotné testovací scénáře jsou součástí testovací analýzy.
+## Přehled otestovaných testovacích scénářů 
+Výsledek provedeného testování. Samotné testovací scénáře, dle kterých bylo testování prováděno, jsou součástí testovací analýzy.
+
+- Celkový počet bug reportů: 24
+- Rozdělení podle závažnosti (Severity):
+  - Critical: 8
+  - High: 5
+  - Medium: 4
+  - Low: 7
+ 
+### Seznam bugů se závažností (Severity) = Critical
+- [BUG-003: Záhlaví: Kliknutí na název e-shopu "Demo Shop" přesměruje uživatele do Admin sekce](./Bug%20report/BUG-003.md)
+- [BUG-007: Checkout: Objednávkový formulář lze odeslat bez vyplnění povinného pole "City"](./Bug%20report/BUG-007.md)
+- [BUG-008: Checkout: Nedostatečná validace pole "Email" (akceptuje neplatnou TLD s jedním znakem)](./Bug%20report/BUG-008.md)
+- [BUG-010: Checkout: Nesprávná validace formátu telefonního čísla (Slovensko akceptuje pouze 8 číslic)](./Bug%20report/BUG-010.md)
+- [BUG-011: Checkout: Slevový kupón FLAT20 aplikuje nesprávnou výši slevy ($200 místo $20)](./Bug%20report/BUG-011.md)
+- [BUG-014: Checkout: Seniorská sleva se aplikuje dříve (v 64 letech) a v chybné výši (10% místo 5%)](./Bug%20report/BUG-014.md)
+- [BUG-017: Admin panel: Po úpravě produktu se uloží nesprávná cena (navyšuje se o 10 %)](./Bug%20report/BUG-017.md)
+- [BUG-021: Checkout: Nelze dokončit objednávku u produktu skladem ("The following products cannot be bought")](./Bug%20report/BUG-021.md)
+
 
 | ID Scénáře | Název testovacího scénáře | Výsledek | Počet chyb | Výstup |
 | :--- | :--- | :---: | :---: | :--- |
