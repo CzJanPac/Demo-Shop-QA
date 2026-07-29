@@ -97,7 +97,7 @@ Vzhledem k fázi projektu a absenci specifikace API endpointů je testování za
 
 ### TS-02: Práce s katalogem produktů a košíkem (UI)
 * **Cíl:** Ověřit chování uživatelského rozhraní při výběru zboží, práci s množstvím a přechodu do košíku.
-* **Klíčové věci k otestování:** Zobrazení kategorií, funkčnost tlačítek pro vložení do košíku, úprava počtu kusů pomocí šipek +/- v katalogu i v košíku, reakce UI na pokus o přidání více kusů než je na skladě, automatické zmizení položky z košíku při 0 ks, proklik z katalogu do detailu a tlačítko "Zpět do obchodu".
+* **Klíčové věci k otestování:** Zobrazení kategorií, funkčnost tlačítek pro vložení do košíku, úprava počtu kusů pomocí šipek +/- v katalogu i v košíku, reakce UI na pokus o přidání více kusů než je na skladě, automatické zmizení položky z košíku při 0 ks, vysypání košíku, proklik z košíku k objednávce, proklik z katalogu do detailu, úprava množství v detailu a vložení do košíku, tlačítko "Zpět do obchodu".
 
 ### TS-03: Objednávkový formulář a validace prvků (UI)
 * **Cíl:** Ověřit vizuální validaci a chování všech formulářových prvků v pokladně.
