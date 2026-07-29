@@ -3,7 +3,7 @@
 | ID Scénáře | Název testovacího scénáře | Výsledek | Počet chyb | Poznámka / Výstup |
 | :--- | :--- | :---: | :---: | :--- |
 | **TS-01** | Přihlášení do e-shopu a správa relace | 🟢 **PASSED** | 0 | Funkcionalita bez výhrad. Validace polí, reakce na neplatné údaje i zachování relace po F5 fungují správně. |
-| **TS-02** | Práce s katalogem produktů a košíkem | 🟡 *IN PROGRESS* | - | Testování probíhá... |
+| **TS-02** | Práce s katalogem produktů a košíkem | 🔴 **FAILED** | 3 | Nalezeny chyby: Katalog: Při výfiltrování kategorie "Toys" se zobrazují produkty z kategorie "Audio" [[BUG-001](<./Bug report/BUG-001.md>)], Katalog: Řazení produktů "Name (Z-A)" zobrazuje položky nesprávně sežazené [[BUG-002](<./Bug report/BUG-002.md>)] a Záhlaví: Kliknutí na název e-shopu "Demo Shop" přesměruje uživatele do Admin sekce [[BUG-003](<./Bug report/BUG-003.md>)]. |
 | **TS-03** | Objednávkový formulář a validace prvků | ⚪ *NOT STARTED* | - | Čeká na provedení. |
 | **TS-04** | Výpočet celkové ceny a vizuální promítnutí slev | ⚪ *NOT STARTED* | - | Čeká na provedení. |
 | **TS-05** | Odeslání objednávky a reakce rozhraní | ⚪ *NOT STARTED* | - | Čeká na provedení. |
