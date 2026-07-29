@@ -1,6 +1,7 @@
-## Přehled vykonaných testovacích scénářů (Test Execution Log)
+## Přehled vykonaných testovacích scénářů 
+Testovací scénáře jsou součástí testovací analýzy.
 
-| ID Scénáře | Název testovacího scénáře | Výsledek | Počet chyb | Poznámka / Výstup |
+| ID Scénáře | Název testovacího scénáře | Výsledek | Počet chyb | Výstup |
 | :--- | :--- | :---: | :---: | :--- |
 | **TS-01** | Přihlášení do e-shopu a správa relace | 🟢 **PASSED** | 0 | Funkcionalita bez výhrad. Validace polí, reakce na neplatné údaje i zachování relace po F5 fungují správně. |
 | **TS-02** | Práce s katalogem produktů a košíkem | 🔴 **FAILED** | 6 | Nalezeny chyby:<br>• [[BUG-001](<./Bug report/BUG-001.md>)] Katalog: Při vyfiltrování kategorie "Toys" se zobrazují produkty z kategorie "Audio"<br>• [[BUG-002](<./Bug report/BUG-002.md>)] Katalog: Řazení produktů "Name (Z-A)" zobrazuje položky nesprávně sežazené<br>• [[BUG-003](<./Bug report/BUG-003.md>)] Záhlaví: Kliknutí na název e-shopu "Demo Shop" přesměruje uživatele do Admin sekce<br>• [[BUG-004](<./Bug report/BUG-004.md>)] Košík: Celková cena v košíku zobrazuje nesprávný symbol měny (Euro místo Dolaru)<br>• [[BUG-005](<./Bug report/BUG-005.md>)] Detail produktu: Překlep v popisku značky ("Barnd" místo "Brand")<br>• [[BUG-006](<./Bug report/BUG-006.md>)] Detail produktu: Český výraz "Barva" v anglické verzi webu (místo "Color") |
