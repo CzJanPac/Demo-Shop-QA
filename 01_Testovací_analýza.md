@@ -6,82 +6,66 @@
 
 ## 1. Rozdělení aplikace do testovacích oblastí a prioritizace
 
-K prioritizaci jsem využil analýzu rizik. Vzhledem k nízké rozsáhlosti aplikace jsem nevytvořil matici rizik (*dopad na byznys × pravděpodobnost výskytu chyby = rizikové skóre*), ale rovnou určil priority dle vlivu na uskutečnění hlavního cíle aplikace (e-shopu), kterým je prodej produktů a generování zisku. Zohlednil jsem také počet uživatelů, které by potenciální chyba mohla ovlivnit.
+K prioritizaci jsem využil analýzu rizik. Vzhledem k nízké rozsáhlosti aplikace jsem nevytvořil kompletní matici rizik (*dopad na byznys × pravděpodobnost výskytu chyby = rizikové skóre*), ale rovnou určil priority dle vlivu na uskutečnění hlavního cíle e-shopu (prodej produktů a generování zisku) a podle počtu zasažených uživatelů.
 
-### P1 – CRITICAL
-Jedná se o oblasti, u kterých by chyby znemožnily uskutečnit nákup a odeslat objednávku. Tyto chyby by ovlivnily prakticky všechny uživatele a měly by tak největší dopad jak na finanční, tak na reputační stránku společnosti.
+### Přehled prioritizace testovacích oblastí
 
-* **Přihlášení do e-shopu:** Vzhledem k tomu, že je přihlášení uvedeno ve Funkční specifikaci, zahrnuji jej do analýzy (určitě bych se zeptal zadavatele zda je to pouze přístup na testovací prostředí nebo zda je to záměr, aby se na eshop dostal jen omezený okruh lidí, např. firemní partneři apod.). Přihlášení je základ pro přístup do e-shopu. Pokud selže přihlašování, do aplikace se nedostanou ani zákazníci, ani zaměstnanci kvůli správě produktů v sekci Admin.
-* **Hlavní stránka (katalog produktů + kategorie):** Nepostradatelná oblast, na které si zákazník prohlíží produkty, upravuje jejich množství, vkládá je do košíku a proklikává se do košíku. Hlavní akce zákazníka se provádějí zde.
-* **Košík:** Mezikrok mezi hlavní stránkou a samotnou objednávkou. Informuje zákazníka o jeho vybraných produktech a cenách včetně celkové ceny za produkty. Je to jediná cesta, kterou lze pokračovat k objednávce.
-* **Objednávkový formulář:** Vyplňují se zde povinné i nepovinné údaje o zákazníkovi, doručení i slevách. Pokud by selhal formulář, nebude možné zboží odeslat zákazníkovi a celý nákupní proces selže.
-* **Výpočet celkové ceny (množství zboží, ceny, slevy, doprava):** Matematické operace vypočítávající celkovou cenu z několika vstupů (produkty, slevy, doprava, platební metoda). Je zde riziko nesprávného výpočtu podle zadaných vstupů a chyba v celkové částce by byla velmi kritická, ať už by se jednalo o podhodnocení, nebo nadhodnocení celkové ceny.
-* **Odeslání objednávky a potvrzení:** Všechny výše zmíněné kroky vedou k odeslání objednávky, u které je klíčové, aby se úspěšně propsala do databáze se správnými daty. Bez toho by opět nebylo možné odeslat zboží na správnou adresu, vystavit účet (fakturu) a udržovat správné množství zboží na skladě. Přidal jsem zde i potvrzení objednávky, které je důležité, pro informování zákazníka o úspěšně odeslané objednávce. Bez tohoto potvrzení by mohl zákazník objednávku znovu vytvořit a vznikla by nechtěná duplicitní objednávka.
+| Priorita | Testovací oblast | Hlavní důvod zařazení (Byznys dopad) |
+| :--- | :--- | :--- |
+| **P1 – CRITICAL** | **Přihlášení do e-shopu** | Vstupní brána do aplikace. Selhání blokuje zákazníky i administrátory. |
+| **P1 – CRITICAL** | **Katalog produktů & Kategorie** | Hlavní prodejní plocha. Selhání znemožní výběr zboží a vložení do košíku. |
+| **P1 – CRITICAL** | **Košík** | Jediná cesta k objednávce. Selhání blokuje přechod k platbě. |
+| **P1 – CRITICAL** | **Objednávkový formulář** | Sběr klíčových dat pro doručení a platbu. Selhání znemožní dokončit nákup. |
+| **P1 – CRITICAL** | **Výpočet celkové ceny** | Finanční riziko. Chyba ve výpočtu slev/dopravy způsobuje přímou finanční ztrátu. |
+| **P1 – CRITICAL** | **Odeslání a potvrzení** | Vytvoření objednávky v DB, odečet ze skladu a prevence duplicity (double-click). |
+| **P2 – HIGH** | **Admin panel (CRUD operace & Export)** | Interní nástroj. Selhání omezí správu zboží, ale přímo neblokuje nakupující zákazníky. |
+| **P3 – MEDIUM** | **Detail produktu** | Doplňkové informace pro zákazníka. Zboží lze vložit do košíku i přímo z katalogu (existuje workaround). |
+| **P4 – LOW** | **Vzhled a použitelnost (UI/UX)** | Kosmetické a vizuální chyby. Málokdy přímo blokují dokončení nákupu. |
 
-### P2 – HIGH
-Správa produktů, tedy interní část aplikace, kterou používají zaměstnanci e-shopu. Chyba, v této části, může ovlivnit cenu zboží, skladové zásoby a omezit dostupnost zboží. Většina chyb ovšem nenaruší samotný nákupní proces zákazníka, ale ovlivní pouze zaměstnance e-shopu, kteří provedou úpravy o něco později po odstranění případné chyby.
+---
 
-* **Admin panel, CRUD operace (přidání, editace, smazání produktu), export:** Pokud nelze přidat nebo upravit produkt v danou chvíli (musí se počkat na opravu), tak to přímo to neovlivní nákupní proces, který lze provést i tak. Mohou nastat situace, kdy to může být kritické – například když je potřeba stáhnout z prodeje zboží, které už dodavatel nemá k dispozici, aby nedocházelo k vytváření objednávek, které nelze odbavit právě z důvodu nedostupnosti a nestažení zboží z prodeje. Export do XLS je drobná funkce, kterou nechávám jako součást této oblasti.
+### Zdůvodnění priorit
 
-### P3 – MEDIUM
-Důležité části, které nejsou nutné pro kompletní nákupní proces (vytvoření a odeslání objednávky), případně je možný *workaround* – tedy provést nákup jinou, i když třeba méně pohodlnou cestou.
+#### P1 – CRITICAL
+Kritické oblasti tvořící jádro nákupního procesu. Případná chyba zde plně znemožní dokončení objednávky, což má okamžitý dopad na tržby a reputaci e-shopu.
 
-* **Detail produktu:** Detail produktu je důležitý hlavně pro zákazníka, který má zájem o bližší informace o konkrétním produktu. Neovlivní tedy všechny zákazníky, ale jen určitou část. Navíc je možné provést vložení produktu do košíku i mimo detail zboží, a to na hlavní stránce s katalogem produktů.
+* **Přihlášení do e-shopu:** Vstupní brána do aplikace pro zákazníky i administrátory. Pokud selže autentizace, uživatelé se do e-shopu vůbec nedostanou. *(Pozn.: Doporučuji ověřit se zadavatelem, zda je přihlášení pouze ochranou testovacího prostředí, nebo požadovanou funkcí pro uzavřený okruh uživatelů).*
+* **Katalog produktů & Kategorie:** Primární prodejní plocha, kde zákazník vybírá zboží a vkládá ho do košíku. Selhání zamezí začátku nákupního procesu.
+* **Košík:** Nedílný mezikrok mezi výběrem zboží a objednávkou. Zobrazuje celkový přehled položek a je to jediná cesta k objednávkovému formuláři.
+* **Objednávkový formulář:** Slouží ke sběru povinných údajů pro doručení a fakturaci. Nefunkčnost formuláře zcela blokuje odeslání objednávky.
+* **Výpočet celkové ceny:** Matematické operace sčítající položky, slevy, dopravu a platbu. Nesprávně vypočítaná částka představuje vysoké finanční i právní riziko (podhodnocení i nadhodnocení ceny).
+* **Odeslání a potvrzení objednávky:** Klíčové pro zápis dat do databáze, rezervaci skladu a vystavení faktury. Potvrzení objednávky je kritické i jako prevence vzniku duplicitních objednávek (když uživatel nebude vědět, že se objednávka odeslala tak zkusí vytvořit další).
 
-### P4 – LOW
-Do této kategorie jsem zařadil oblast, která nemá větší vliv na nákupní proces. Pokud se v ní vyskytnou chyby, ovlivní méně uživatelů a většinou nebrání vytvoření a dokončení objednávky.
+#### P2 – HIGH
+Interní část e-shopu určená pro správu katalogu ze strany zaměstnanců. Chyby v této sekci ovlivňují operativu obchodu, ale přímo neblokují nakupující zákazníky.
 
-* **Vzhled a použitelnost (UI/UX):** Jelikož se jedná o responzivní e-shop, zvolil jsem testování UI a UX jako samostatnou oblast. Při použití na mobilních zařízeních se často vyskytují různé chyby v rozložení prvků i použitelnosti. Tyto chyby obvykle nebývají kritické (tedy blokující používání aplikace), proto jsem zvolil nízkou prioritu testování.
+* **Admin panel (CRUD operace & Export):** Výpadek správy produktů dočasně zamezí úpravám cen či skladů. Může být kritický v situaci, kdy je nutné okamžitě stáhnout z prodeje vyprodané zboží. Export do XLS slouží jako doplňkový nástroj.
+
+#### P3 – MEDIUM
+Funkcionality důležité pro uživatelský komfort, u kterých však existuje náhradní řešení v případě selhání (*workaround*).
+
+* **Detail produktu:** Poskytuje doplňkové informace o zboží. Pokud detail nefunguje, zákazník může produkt stále vložit do košíku přímo z hlavního katalogu.
+
+#### P4 – LOW
+Oblasti bez přímého vlivu na úspěšné dokončení nákupního procesu.
+
+* **Vzhled a použitelnost (UI/UX):** Zahrnuje responzivitu na mobilních zařízeních a vizuální nedostatky. Tyto chyby většinou mají pouze estetický dopad a nebrání dokončení objednávky.
 
 ---
 
 ## 2. Testovací strategie, techniky a úrovně testování
 
-### Přihlášení do e-shopu
-* **Integrační testování:** Validace API endpointů (status, response, doba odezvy)
-* **Systémové testování:** Validace vstupních polí, neplatné kombinace
-* **Techniky:** Ekvivalenční třídy
-
-### Hlavní stránka (katalog produktů + kategorie)
-* **Integrační testování:** Validace API endpointů (status, response, doba odezvy)
-* **Systémové testování:** Správnost úpravy množství, vkládání do košíku, proklik na detail zboží, řazení, proklik do kategorie
-* **Techniky:** Analýza hraničních hodnot, ekvivalenční třídy
-
-### Košík
-* **Integrační testování:** Validace API endpointů (status, response, doba odezvy)
-* **Systémové testování:** Testování úprav v košíku, aktualizace okna, přidání zboží v jiném okně nebo záložce prohlížeče
-* **Techniky:** Analýza hraničních hodnot, přechod stavů, ekvivalenční třídy
-
-### Objednávkový formulář
-* **Integrační testování:** Validace API endpointů (status, response, doba odezvy)
-* **Systémové testování:** Validace vstupních polí formuláře
-* **Techniky:** Ekvivalenční třídy, analýza hraničních hodnot, rozhodovací tabulky
-
-### Výpočet celkové ceny (počet zboží, slevy, doprava)
-* **Integrační testování:** Validace API endpointů (status, response, doba odezvy)
-* **Systémové testování:** Testujeme správnost změny celkové ceny a shrnutí objednávky po změnách v dopravě, platbě nebo zadání kódu a také dodržení podmínek slev
-* **Techniky:** Ekvivalenční třídy, analýza hraničních hodnot, rozhodovací tabulky
-
-### Odeslání objednávky a potvrzení
-* **Integrační testování:** Validace API endpointů (status, response, doba odezvy) a kontrola dat v databázi
-* **Systémové testování:** Ověření vyplnění povinných polí, vyprázdnění košíku, nemožnost odeslat objednávku opakovaně po opakovaném kliknutí na odeslat
-* **Techniky:** Ekvivalenční třídy, analýza hraničních hodnot, rozhodovací tabulky
-
-### Admin panel, CRUD operace (přidání, editace, smazání produktu)
-* **Integrační testování:** Validace API endpointů (status, response, doba odezvy) a kontrola dat v databázi
-* **Systémové testování:** Celková správa produktů včetně exportu do XLS
-* **Techniky:** Ekvivalenční třídy, analýza hraničních hodnot
-
-### Detail produktu
-* **Integrační testování:** Validace API endpointů (status, response, doba odezvy)
-* **Systémové testování:** Úpravy množství, přidávání do košíku
-* **Techniky:** Analýza hraničních hodnot
-
-### Vzhled a použitelnost (UI)
-* **Systémové testování:** Responzivita, kompatibilita napříč prohlížeči/zařízeními, čitelnost
-* **Techniky:** Testování na základě checklistů (kontrolní seznam pro UI prvky)
-
-Na všechny oblasti bych vyhradil určitý čas pro **Explorativní testování**, díky kterému je možné odhalit neočekávané chyby, mezery v logice používání aplikace, špatné ovladatelnosti nebo i nedostatky v uživatelské přívětivosti.
+| Oblast | Úrovně testování | Testovací techniky & Přístupy | Zdůvodnění volby (Proč právě tyto) |
+| :--- | :--- | :--- | :--- |
+| **1. Přihlášení do e-shopu** | • Integrační (API)<br>• Systémové (UI) | • Ekvivalenční třídy<br>• Chybové odhadování (*Error Guessing*) | Ekvivalenční třídy pro platné a neplatné kombinace jména a hesla. Error Guessing pro neobvyklé vstupy |
+| **2. Hlavní stránka (Katalog)** | • Integrační (API)<br>• Systémové (UI) | • Analýza hraničních hodnot (BVA)<br>• Ekvivalenční třídy | Ověření zobrazení karet produktů a kategorií z DB. BVA na šipky +/- u změny množství (0 ks, 1 ks, max sklad) a tlačítko "Do košíku". |
+| **3. Košík** | • Integrační (API)<br>• Systémové (UI) | • Přechod stavů (*State Transition*)<br>• Analýza hraničních hodnot (BVA) | State Transition pro chování košíku (prázdný vs. naplněný košík a dostupnost tlačítka k objednávce). BVA pro úpravu kusů přes +/- a odebrání při 0 ks. |
+| **4. Objednávkový formulář** | • Integrační (API)<br>• Systémové (UI) | • Analýza hraničních hodnot (BVA)<br>• Ekvivalenční třídy | BVA pro limity vstupních polí (max 30 znaků, PSČ, telefon). Ekvivalenční třídy pro povinná/nepovinná pole a platné formáty (e-mail, datum narození). |
+| **5. Výpočet celkové ceny** | • Jednotkové / API (Backend)<br>• Systémové (UI) | • Rozhodovací tabulky (*Decision Tables*)<br>• Analýza hraničních hodnot (BVA) | **Rozhodovací tabulka** pro kombinace slev (věk ≥ 65 let, student checkbox, slevové kódy, platba kartou). BVA pro věkovou hranici podle data narození (64, 65, 66 let). |
+| **6. Odeslání a potvrzení** | • Integrační (API + DB)<br>• Systémové (UI) | • Ekvivalenční třídy<br>• Chybové odhadování (*Error Guessing*) | Ekvivalenční třídy pro úspěšné/neúspěšné odeslání (zápis do DB, vyprázdnění košíku, odečet ze skladu). Error Guessing pro prevenci duplicity (double-click). |
+| **7. Admin panel (CRUD)** | • Integrační (API + DB)<br>• Systémové (UI) | • Ekvivalenční třídy<br>• Testování funkcionality (CRUD)<br>• Analýza hraničních hodnot (BVA)<br>• Chybové odhadování (*Error Guessing*) | Ověření kompletní správy produktů (přidání, úprava, smazání) a jejich promítnutí do DB a katalogu. BVA pro limity povinných parametrů a skladové zásoby. |
+| **8. Detail produktu** | • Systémové (UI)<br>• Integrační (API) | • Analýza hraničních hodnot (BVA)<br>• Ekvivalenční třídy | Ověření správného načtení dat produktu z DB podle ID, funkčnosti šipek +/- pro množství a tlačítka "Zpět do obchodu". |
+| **9. Vzhled a použitelnost (UI/UX)** | • Systémové (UI) | • Testování podle checklistů<br>• Cross-browser / Cross-device | Zaměření čistě na responzivitu, přetékání textů, čitelnost a ovladatelnost na mobilu a desktopu. |
 
 ---
 
@@ -97,6 +81,45 @@ Na všechny oblasti bych vyhradil určitý čas pro **Explorativní testování*
 
 3. **Výpočet celkové ceny se zahrnutím slev, dopravy a platby kartou:**
    * *Průběh:* Testovat přes API mimo FE.
-   * *Důvod:* Automatizace je zde ideální pro rychlé a stabilní testování s větším množstvím dat a různými variacemi vstupů. U automatizace nehrozí chyby v zadávání dat jako u manuálního provádění.
+   * *Důvod:* Automatizace je zde ideální pro rychlé a stabilní testování s větším množstvím dat a různými variacemi vstupů. U automatizace nehrozí chyby v zadávání dat jako u manuálního provádění (využití Testovací pyramidy).
 
-Tyto tři části jsou i vhodnými adepty na **Smoke testování** a nasazení do **CI/CD pipeline**.
+Tyto tři části jsou i vhodnými adepty na **Smoke testování** a nasazení do **CI/CD pipeline**. Pro přípravu testovacích dat a reset stavu před spuštěním automatizovaných testů lze využít testovací funkci *Reset application*.
+
+---
+
+## 4. Testovací scénáře pro manuální (explorativní) testování (UI / Systémové)
+
+Vzhledem k fázi projektu a absenci specifikace API endpointů je testování zaměřeno na **systémové testování skrze uživatelské rozhraní (UI)**. K testování byla zvolena metoda **Explorativního testování řízeného testovacími scénáři**, kde scénáře tvoří rámec pro manuální průchody aplikací.
+
+### TS-01: Přihlášení do e-shopu a správa relace (UI)
+* **Cíl:** Ověřit funkčnost přihlašovacího formuláře a správy relace uživatele přímo v rozhraní.
+* **Klíčové věci k otestování:** Vložení platných/neplatných údajů, reakce UI na chybějící data (chybové hlášky), chování polí při vložení mezer (whitespaces), viditelnost přihlášeného stavu a zachování relace po obnovení stránky (F5).
+
+### TS-02: Práce s katalogem produktů a košíkem (UI)
+* **Cíl:** Ověřit chování uživatelského rozhraní při výběru zboží, práci s množstvím a přechodu do košíku.
+* **Klíčové věci k otestování:** Zobrazení kategorií, funkčnost tlačítek pro vložení do košíku, úprava počtu kusů pomocí šipek +/- v katalogu i v košíku, reakce UI na pokus o přidání více kusů než je na skladě, automatické zmizení položky z košíku při 0 ks, proklik z katalogu do detailu a tlačítko "Zpět do obchodu".
+
+### TS-03: Objednávkový formulář a validace prvků (UI)
+* **Cíl:** Ověřit vizuální validaci a chování všech formulářových prvků v pokladně.
+* **Klíčové věci k otestování:** Délkové limity polí (max 30 znaků), reakce na chybějící povinné údaje (červené hlášky/zvýraznění), správnost formátu e-mailu a PSČ, zadání data narození přes kalendář (Date Picker), dynamická změna předvolby u telefonu při změně země.
+
+### TS-04: Výpočet celkové ceny a vizuální promítnutí slev (UI)
+* **Cíl:** Ověřit, že UI správně a okamžitě přepočítává a zobrazuje celkovou cenu po aplikaci slev a voleb v pokladně.
+* **Klíčové věci k otestování:**
+  * Automatické uplatnění 5% slevy podle zadaného data narození (věk $\ge$ 65 let – hranice 64, 65, 66 let).
+  * Zaškrtnutí checkboxu "I am a student" (15% sleva).
+  * Zadávání slevových kódů (FREESHIP8, AUDIO20PC, FLAT20) a ověření chybové hlášky při pokusu zadat druhý kód (nekombinovatelnost).
+  * Změna ceny po výběru platby kartou (5% sleva) a ověření, že se správně přičte/odečte k ostatním slevám.
+  * Změna ceny po výběru dopravy (Pobočka $0, Box $5, Domů $15).
+
+### TS-05: Odeslání objednávky a reakce rozhraní (UI)
+* **Cíl:** Dokončit nákupní proces v UI, ověřit zobrazení potvrzovací obrazovky a návazné stavy.
+* **Klíčové věci k otestování:** Zobrazení finálního souhrnu/potvrzení po kliknutí na odeslat, vyprázdnění košíku po úspěšném nákupu, blokace tlačítka odeslat proti opakovanému kliknutí (double-click).
+
+### TS-06: Administrace produktů v UI (CRUD operace)
+* **Cíl:** Ověřit správy produktového katalogu přes uživatelské rozhraní Admin panelu.
+* **Klíčové věci k otestování:** Vyplnění formuláře pro nový produkt, úprava stávajícího produktu a vizuální kontrola, zda se změna ihned projevila v katalogu na e-shopu, smazání produktu a jeho zmizení z nabídky, stažení souboru při kliknutí na export do XLS.
+
+### TS-07: Responzivita, layout a UI/UX
+* **Cíl:** Ověřit vizuální správnost a použitelnost rozhraní na různých zařízeních a rozlišeních.
+* **Klíčové věci k otestování:** Zobrazení na mobilním rozlišení, čitelnost textů, překrývání nebo přetékání prvků (tlačítka, formuláře, tabulky), ovladatelnost na dotykovém displeji vs. myší.
