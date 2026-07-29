@@ -53,7 +53,7 @@ Oblasti bez přímého vlivu na úspěšné dokončení nákupního procesu.
 
 ---
 
-## 2. Testovací strategie, techniky a úrovně testování
+## 2. Testovací techniky a úrovně testování
 
 | Oblast | Úrovně testování | Testovací techniky & Přístupy | Zdůvodnění volby (Proč právě tyto) |
 | :--- | :--- | :--- | :--- |
@@ -89,7 +89,7 @@ Tyto tři části jsou i vhodnými adepty na **Smoke testování** a nasazení d
 
 ## 4. Testovací scénáře pro manuální (explorativní) testování (UI / Systémové)
 
-Vzhledem k fázi projektu a absenci specifikace API endpointů je testování zaměřeno na **systémové testování skrze uživatelské rozhraní (UI)**. K testování byla zvolena metoda **Explorativního testování řízeného testovacími scénáři**, kde scénáře tvoří rámec pro manuální průchody aplikací.
+Vzhledem k omezenému času na provedení tohoto úkolu, nedostatečné dokumentaci a absenci specifikace API endpointů je testování zaměřeno výhradně na **systémové testování skrze uživatelské rozhraní (UI)**. K testování byla zvolena metoda **Explorativního testování řízeného testovacími scénáři**, kde scénáře tvoří rámec pro manuální průchody aplikací.
 
 ### TS-01: Přihlášení do e-shopu a správa relace (UI)
 * **Cíl:** Ověřit funkčnost přihlašovacího formuláře a správy relace uživatele přímo v rozhraní.
