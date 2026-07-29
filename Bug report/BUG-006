@@ -1,0 +1,27 @@
+# [BUG-006] Detail produktu: Český výraz "Barva" v anglické verzi webu (místo "Color")
+
+* **ID chyby:** BUG-006
+* **Aplikace / Sekce:** demoShop / Detail produktu
+* **Závažnost (Severity):** Low
+* **Priorita (Priority):** Low
+* **Prostředí:** Windows 11, Google Chrome v126
+* **Datum:** 29. 07. 2026
+
+### Popis chyby
+V detailu produktu se u popisku barvy zobrazuje český výraz "Barva" místo anglického výrazu "Color".
+
+### Předpoklady
+1. Uživatel je přihlášen do e-shopu.
+
+### Kroky k reprodukci
+1. V katalogu produktů kliknout na libovolný produkt pro otevření jeho detailu.
+2. Zkontrolovat popisek barvy.
+
+### Očekávané chování
+Popisek barvy je zobrazen v angličtině jako **Color:**.
+
+### Skutečné chování
+Popisek barvy je zobrazen v češtině jako **Barva:**.
+
+### Přílohy
+<img src="https://raw.githubusercontent.com/CzJanPac/Demo-Shop-QA/main/images/BUG-006.png" alt="BUG-006 Screenshot" width="100%" />
