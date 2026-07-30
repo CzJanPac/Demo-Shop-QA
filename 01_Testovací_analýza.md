@@ -100,11 +100,11 @@ Vzhledem k omezenému času na provedení tohoto úkolu, nedostatečné dokument
 * **Klíčové věci k otestování:** Zobrazení kategorií, funkčnost tlačítek pro vložení do košíku, úprava počtu kusů pomocí šipek +/- v katalogu i v košíku, reakce UI na pokus o přidání více kusů než je na skladě, automatické zmizení položky z košíku při 0 ks, vysypání košíku, proklik z košíku k objednávce, proklik z katalogu do detailu, úprava množství v detailu a vložení do košíku, tlačítko "Zpět do obchodu".
 
 ### TS-03: Objednávkový formulář a validace prvků (UI)
-* **Cíl:** Ověřit vizuální validaci a chování všech formulářových prvků v pokladně.
+* **Cíl:** Ověřit vizuální validaci a chování všech formulářových prvků v objednávce.
 * **Klíčové věci k otestování:** Délkové limity polí (max 30 znaků), reakce na chybějící povinné údaje (červené hlášky/zvýraznění), správnost formátu e-mailu a PSČ, zadání data narození přes kalendář (Date Picker), dynamická změna předvolby u telefonu při změně země.
 
 ### TS-04: Výpočet celkové ceny a vizuální promítnutí slev (UI)
-* **Cíl:** Ověřit, že UI správně a okamžitě přepočítává a zobrazuje celkovou cenu po aplikaci slev a voleb v pokladně.
+* **Cíl:** Ověřit, že UI správně a okamžitě přepočítává a zobrazuje celkovou cenu po aplikaci slev a voleb.
 * **Klíčové věci k otestování:**
   * Automatické uplatnění 5% slevy podle zadaného data narození (věk $\ge$ 65 let – hranice 64, 65, 66 let).
   * Zaškrtnutí checkboxu "I am a student" (15% sleva).
