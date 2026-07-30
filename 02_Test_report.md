@@ -1,5 +1,5 @@
 ## Test report
-Výsledek provedeného testování. Samotné testovací scénáře, dle kterých bylo testování prováděno, jsou součástí testovací analýzy.
+Výsledek provedeného testování. Samotné testovací scénáře, dle kterých bylo testování prováděno, jsou součástí testovací analýzy. Celkový stav aplikace je nevyhovující a obsahuje blokační chyby se závažností Critical.
 
 - Celkový počet bug reportů: 24
 - Rozdělení podle závažnosti (Severity):
