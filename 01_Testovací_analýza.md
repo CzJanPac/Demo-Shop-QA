@@ -37,7 +37,7 @@ Kritické oblasti tvořící jádro nákupního procesu. Případná chyba zde p
 * **Odeslání a potvrzení objednávky:** Klíčové pro zápis dat do databáze, rezervaci skladu a vystavení faktury. Potvrzení objednávky je kritické i jako prevence vzniku duplicitních objednávek (když uživatel nebude vědět, že se objednávka odeslala tak zkusí vytvořit další).
 
 #### P2 – HIGH
-Interní část e-shopu určená pro správu katalogu ze strany zaměstnanců. Chyby v této sekci ovlivňují operativu obchodu, ale přímo neblokují nakupující zákazníky.
+Interní část e-shopu určená pro správu katalogu ze strany zaměstnanců. Chyby v této sekci ovlivňují správu produktů, ale přímo neblokují nakupující zákazníky.
 
 * **Admin panel (CRUD operace & Export):** Výpadek správy produktů dočasně zamezí úpravám cen či skladů. Může být kritický v situaci, kdy je nutné okamžitě stáhnout z prodeje vyprodané zboží. Export do XLS slouží jako doplňkový nástroj.
 
