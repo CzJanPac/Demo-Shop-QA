@@ -81,9 +81,9 @@ Oblasti bez přímého vlivu na úspěšné dokončení nákupního procesu.
 
 3. **Výpočet celkové ceny se zahrnutím slev, dopravy a platby kartou:**
    * *Průběh:* Testovat přes API mimo FE.
-   * *Důvod:* Automatizace je zde ideální pro rychlé a stabilní testování s větším množstvím dat a různými variacemi vstupů. U automatizace nehrozí chyby v zadávání dat jako u manuálního provádění (využití Testovací pyramidy).
+   * *Důvod:* Automatizace je zde ideální pro rychlé a stabilní testování s větším množstvím dat a různými variacemi vstupů. U automatizace nehrozí chyby v zadávání dat jako u manuálního provádění.
 
-Tyto tři části jsou i vhodnými adepty na **Smoke testování** a nasazení do **CI/CD pipeline**. Pro přípravu testovacích dat a reset stavu před spuštěním automatizovaných testů lze využít testovací funkci *Reset application*.
+Tyto tři části jsou i vhodnými adepty na **Smoke testování** a nasazení do **CI/CD pipeline**.
 
 ---
 
