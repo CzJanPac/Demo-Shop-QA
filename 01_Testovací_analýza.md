@@ -39,7 +39,7 @@ Kritické oblasti tvořící jádro nákupního procesu. Případná chyba zde p
 #### P2 – HIGH
 Interní část e-shopu určená pro správu katalogu ze strany zaměstnanců. Chyby v této sekci ovlivňují správu produktů, ale přímo neblokují nakupující zákazníky.
 
-* **Admin panel (CRUD operace & Export):** Výpadek správy produktů dočasně zamezí úpravám cen či skladů. Může být kritický v situaci, kdy je nutné okamžitě stáhnout z prodeje vyprodané zboží. Export do XLS slouží jako doplňkový nástroj.
+* **Admin panel (CRUD operace & Export):** Výpadek správy produktů dočasně zamezí úpravám produktů, cen či skladů. Může být kritický v situaci, kdy je nutné okamžitě stáhnout z prodeje vyprodané zboží. Export do XLS slouží jako doplňkový nástroj.
 
 #### P3 – MEDIUM
 Funkcionality důležité pro uživatelský komfort, u kterých však existuje náhradní řešení v případě selhání (*workaround*).
