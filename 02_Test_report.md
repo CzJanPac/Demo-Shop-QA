@@ -1,4 +1,4 @@
-## Přehled otestovaných testovacích scénářů 
+## Test report
 Výsledek provedeného testování. Samotné testovací scénáře, dle kterých bylo testování prováděno, jsou součástí testovací analýzy.
 
 - Celkový počet bug reportů: 24
